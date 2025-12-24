@@ -28,7 +28,12 @@ LUAMOD_API int (luaopen_coroutine) (lua_State *L);
 
 #define LUA_DBLIBNAME	"debug"
 #define LUA_DBLIBK	(LUA_COLIBK << 1)
-LUAMOD_API int (luaopen_debug) (lua_State *L);
+LUALIB_API int (luaopen_debug) (lua_State *L);
+LUALIB_API int (luaopen_threaded) (lua_State *L);
+LUALIB_API int (luaopen_threading) (lua_State *L);
+
+
+#if !defined(lua_assert)
 
 #define LUA_IOLIBNAME	"io"
 #define LUA_IOLIBK	(LUA_DBLIBK << 1)
@@ -54,12 +59,16 @@ LUAMOD_API int (luaopen_table) (lua_State *L);
 #define LUA_UTF8LIBK	(LUA_TABLIBK << 1)
 LUAMOD_API int (luaopen_utf8) (lua_State *L);
 
+#define LUA_THREADINGLIBNAME "threading"
+#define LUA_THREADINGLIBK (LUA_UTF8LIBK << 1)
+LUAMOD_API int (luaopen_threadinglib) (lua_State *L);
+
+#endif
 
 /* open selected libraries */
 LUALIB_API void (luaL_openselectedlibs) (lua_State *L, int load, int preload);
 
 /* open all libraries */
 #define luaL_openlibs(L)	luaL_openselectedlibs(L, ~0, 0)
-
 
 #endif
